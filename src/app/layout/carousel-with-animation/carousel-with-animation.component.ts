@@ -1,118 +1,134 @@
-import {Component, ElementRef, OnInit, Renderer2} from '@angular/core';
-import {Voiture} from "../../sahred/model/voitureModel/voiture.model";
-import {CategoriesAppartement} from "../../sahred/model/appartemetModel/categories-appartement.model";
-import {Appartement} from "../../sahred/model/appartemetModel/appartement.model";
-import {VoitureService} from "../../sahred/service/voitureService/voiture.service";
-import {CategoriesAppartementService} from "../../sahred/service/appartemetService/categories-appartement.service";
-import {AppartemetService} from "../../sahred/service/appartemetService/appartemet.service";
-import {Router} from "@angular/router";
+import { Component, ElementRef, Inject, PLATFORM_ID, Renderer2 } from '@angular/core';
+import { Voiture } from "../../sahred/model/voitureModel/voiture.model";
+import { Appartement } from "../../sahred/model/appartemetModel/appartement.model";
+import { VoitureService } from "../../sahred/service/voitureService/voiture.service";
+import { AppartemetService } from "../../sahred/service/appartemetService/appartemet.service";
+import { Router } from "@angular/router";
+import { BaseCarouselComponent } from '../../shared/components/base-carousel.component';
 
 @Component({
   selector: 'app-carousel-with-animation',
   templateUrl: './carousel-with-animation.component.html',
-  styleUrl: './carousel-with-animation.component.css'
+  styleUrls: ['./carousel-with-animation.component.css']
 })
-export class CarouselWithAnimationComponent implements OnInit{
+export class CarouselWithAnimationComponent extends BaseCarouselComponent {
+  // Carousel properties
+  private nextDom!: HTMLElement | null;
+  private prevDom!: HTMLElement | null;
+  private carouselDom!: HTMLElement | null;
+  private sliderDom!: HTMLElement | null;
+  private thumbnailBorderDom!: HTMLElement | null;
+  private thumbnailItemsDom!: NodeListOf<HTMLElement>;
+  private timeDom!: HTMLElement | null;
 
-  //carousel
-
-  nextDom!: HTMLElement;
-  prevDom!: HTMLElement;
-  carouselDom!: HTMLElement;
-  sliderDom!: HTMLElement;
-  thumbnailBorderDom!: HTMLElement;
-  thumbnailItemsDom!: NodeListOf<HTMLElement>;
-  timeDom!: HTMLElement;
   timeRunning: number = 3000;
   timeAutoNext: number = 7000;
-  runTimeOut!: ReturnType<typeof setTimeout>;
-  runNextAuto!: ReturnType<typeof setTimeout>;
-  datVoiture :Array<Voiture>=new Array<Voiture>();
-  public allAppartement: any[]=[];
 
+  datVoiture: Array<Voiture> = [];
+  public allAppartement: any[] = [];
 
-
-  constructor(private voitureService:VoitureService , private categoreieappartemetService:CategoriesAppartementService ,
-              private apartement:AppartemetService,private router:Router,private renderer: Renderer2, private el: ElementRef) {
+  constructor(
+    private voitureService: VoitureService,
+    private apartement: AppartemetService,
+    private router: Router,
+    @Inject(PLATFORM_ID) protected override platformId: Object,
+    protected override renderer: Renderer2,
+    protected override el: ElementRef
+  ) {
+    super(renderer, el, platformId);
   }
 
-
   ngOnInit(): void {
-  this.getAllVoiture();
-  this.getAllAppartement();
-    this.nextDom = document.getElementById('next') as HTMLElement;
-    this.prevDom = document.getElementById('prev') as HTMLElement;
-    this.carouselDom = document.querySelector('.carousel') as HTMLElement;
-    this.sliderDom = this.carouselDom.querySelector('.carousel .list') as HTMLElement;
-    this.thumbnailBorderDom = document.querySelector('.carousel .thumbnail') as HTMLElement;
-    this.thumbnailItemsDom = this.thumbnailBorderDom.querySelectorAll('.item') as NodeListOf<HTMLElement>;
-    this.timeDom = document.querySelector('.carousel .time') as HTMLElement;
+    this.getAllVoiture();
+    this.getAllAppartement();
+  }
 
-    this.thumbnailBorderDom.appendChild(this.thumbnailItemsDom[0]);
+  protected override initializeCarousel(): void {
+    this.nextDom = this.safeQuerySelector('#next');
+    this.prevDom = this.safeQuerySelector('#prev');
+    this.carouselDom = this.safeQuerySelector('.carousel');
 
-    this.nextDom.onclick = () => {
-      this.showSlider('next');
-    };
+    if (this.carouselDom) {
+      this.sliderDom = this.safeQuerySelector('.carousel .list');
+    }
 
-    this.prevDom.onclick = () => {
-      this.showSlider('prev');
-    };
+    this.thumbnailBorderDom = this.safeQuerySelector('.carousel .thumbnail');
+    this.timeDom = this.safeQuerySelector('.carousel .time');
+
+    if (this.thumbnailBorderDom) {
+      this.thumbnailItemsDom = this.safeQuerySelectorAll('.carousel .thumbnail .item');
+      if (this.thumbnailItemsDom.length > 0) {
+        this.renderer.appendChild(this.thumbnailBorderDom, this.thumbnailItemsDom[0]);
+      }
+    }
+
+    if (this.nextDom) {
+      this.renderer.listen(this.nextDom, 'click', () => this.showSlider('next'));
+    }
+
+    if (this.prevDom) {
+      this.renderer.listen(this.prevDom, 'click', () => this.showSlider('prev'));
+    }
 
     this.runNextAuto = setTimeout(() => {
-      this.nextDom.click();
+      if (this.nextDom) {
+        const event = new MouseEvent('click');
+        this.nextDom.dispatchEvent(event);
+      }
     }, this.timeAutoNext);
+
     this.initSlider();
   }
 
+  private showSlider(type: string): void {
+    if (!this.sliderDom || !this.thumbnailBorderDom || !this.carouselDom) return;
 
-
-
-
-
-  showSlider(type: string): void {
-    const sliderItemsDom = this.sliderDom.querySelectorAll('.carousel .list .item') as NodeListOf<HTMLElement>;
-    const thumbnailItemsDom = document.querySelectorAll('.carousel .thumbnail .item') as NodeListOf<HTMLElement>;
+    const sliderItemsDom = this.safeQuerySelectorAll('.carousel .list .item');
+    const thumbnailItemsDom = this.safeQuerySelectorAll('.carousel .thumbnail .item');
 
     if (type === 'next') {
-      this.sliderDom.appendChild(sliderItemsDom[0]);
-      this.thumbnailBorderDom.appendChild(thumbnailItemsDom[0]);
-      this.carouselDom.classList.add('next');
+      this.renderer.appendChild(this.sliderDom, sliderItemsDom[0]);
+      this.renderer.appendChild(this.thumbnailBorderDom, thumbnailItemsDom[0]);
+      this.renderer.addClass(this.carouselDom, 'next');
     } else {
-      this.sliderDom.prepend(sliderItemsDom[sliderItemsDom.length - 1]);
-      this.thumbnailBorderDom.prepend(thumbnailItemsDom[thumbnailItemsDom.length - 1]);
-      this.carouselDom.classList.add('prev');
+      this.renderer.insertBefore(
+        this.sliderDom,
+        sliderItemsDom[sliderItemsDom.length - 1],
+        this.sliderDom.firstChild
+      );
+      this.renderer.insertBefore(
+        this.thumbnailBorderDom,
+        thumbnailItemsDom[thumbnailItemsDom.length - 1],
+        this.thumbnailBorderDom.firstChild
+      );
+      this.renderer.addClass(this.carouselDom, 'prev');
     }
 
     clearTimeout(this.runTimeOut);
     this.runTimeOut = setTimeout(() => {
-      this.carouselDom.classList.remove('next');
-      this.carouselDom.classList.remove('prev');
+      if (this.carouselDom) {
+        this.renderer.removeClass(this.carouselDom, 'next');
+        this.renderer.removeClass(this.carouselDom, 'prev');
+      }
     }, this.timeRunning);
 
     clearTimeout(this.runNextAuto);
     this.runNextAuto = setTimeout(() => {
-      this.nextDom.click();
+      if (this.nextDom) {
+        const event = new MouseEvent('click');
+        this.nextDom.dispatchEvent(event);
+      }
     }, this.timeAutoNext);
   }
 
+  private initSlider(): void {
+    const imageList = this.safeQuerySelector(".slider-wrapper .image-list");
+    const slideButtons = this.safeQuerySelectorAll(".slider-wrapper .slide-button");
+    const sliderScrollbar = this.safeQuerySelector(".container .slider-scrollbar");
 
-  redirectVersLogin() {
-    this.router.navigateByUrl("/login");
-  }
+    if (!imageList || !slideButtons || !sliderScrollbar) return;
 
-
-  initSlider() {
-    const imageList = this.el.nativeElement.querySelector(".slider-wrapper .image-list");
-    const slideButtons = this.el.nativeElement.querySelectorAll(".slider-wrapper .slide-button");
-    const sliderScrollbar = this.el.nativeElement.querySelector(".container .slider-scrollbar");
-    const scrollbarThumb = sliderScrollbar.querySelector(".scrollbar-thumb");
-    const maxScrollLeft = imageList.scrollWidth - imageList.clientWidth;
-
-    // Gestion des événements et manipulation du DOM ici
-    // Assurez-vous d'utiliser this.renderer pour manipuler le DOM au lieu de document
-
-    // Gestion du clic sur le bouton de défilement
-    slideButtons.forEach((button: HTMLElement) =>{
+    slideButtons.forEach((button: HTMLElement) => {
       this.renderer.listen(button, 'click', () => {
         const direction = button.id === "prev-slide" ? -1 : 1;
         const scrollAmount = imageList.clientWidth * direction;
@@ -120,40 +136,41 @@ export class CarouselWithAnimationComponent implements OnInit{
       });
     });
 
-    // Gestion du redimensionnement de la fenêtre
     this.renderer.listen(window, 'resize', () => {
-      // Réinitialise le slider en cas de redimensionnement
       this.initSlider();
     });
   }
 
 
+
+  redirectVersLogin() {
+    this.router.navigateByUrl("/login");
+  }
+
   RedirectToFacture() {
     this.router.navigateByUrl("/reservationInformation");
   }
 
-
-  getAllVoiture(){
-    this.voitureService.getAll().subscribe(
-      {
-        next:(data)=>{
-          this.datVoiture=data;
-        }
+  getAllVoiture() {
+    this.voitureService.getAll().subscribe({
+      next: (data) => {
+        this.datVoiture = data;
       }
-    )
+    });
   }
 
-
-  getAllAppartement(){
+  getAllAppartement() {
     this.apartement.getAll().subscribe({
-      next:data=>{
-        this.allAppartement=data;
+      next: data => {
+        this.allAppartement = data;
       },
-      error:err => {console.log("error")}
-    })
+      error: err => {
+        console.log("error", err);
+      }
+    });
   }
 
   returnUrl(item: any) {
-    return  item.imagePaths[0]
+    return item.imagePaths?.[0] || '';
   }
 }

@@ -109,32 +109,26 @@ export class CreatCategoriesAppartementComponent implements OnInit ,AfterViewIni
 
 
   updateObject() {
-    console.log(this.selectedCategorieItem)
-    console.log(this.item)
     let data={
       "libelle": this.selectedCategorieItem.libelle,
       "libelleNew": this.item.libelle
     }
     this.categoriesAppartementService.update(data).subscribe({
       next:data=>{
-        console.log(data)
         if(data==1){
           this.getAll();
           this.display=false;
-        }else {
-          console.log("error")
         }
 
       },
       error:err => {
-        console.log(data)
+        console.log(err)
       }
     })
 
   }
 
   search(event: Event) {
-    console.log(event)
     let value=(event.target as HTMLInputElement).value;
     this.dataSource.filter=value
   }
@@ -147,7 +141,6 @@ export class CreatCategoriesAppartementComponent implements OnInit ,AfterViewIni
     const formData=this.prepareFormData(this.item);
     this.categoriesAppartementService.save(formData).subscribe({
       next: response => {
-        console.log(response)
         if (response === -1) {
         } else if (response === -2) {
         } else if (response === -3) {

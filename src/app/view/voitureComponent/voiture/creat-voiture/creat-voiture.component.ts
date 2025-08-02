@@ -135,8 +135,6 @@ export class CreatVoitureComponent  implements OnInit, AfterViewInit {
           window.URL.createObjectURL(file)
         )
       }
-      console.log(fileHandle)
-      console.log(this.service.item.images)
       this.service.item.images.push(fileHandle);
     }
   }
@@ -160,11 +158,9 @@ export class CreatVoitureComponent  implements OnInit, AfterViewInit {
 
         this.items=data;
         this.dataSource = new MatTableDataSource<any>(this.items);
-
-        if(data.length!=0){console.log(data); }
       },
       error:(err)=>{
-        console.log('verifier getAll categorie Voiture');
+        console.log('verifier getAll categorie Voiture'+err);
       }
     })
   }
@@ -179,9 +175,7 @@ export class CreatVoitureComponent  implements OnInit, AfterViewInit {
 
   saveObject() {
     this.item.agenceLocation.iceAgLoc=this.authService.dataUtilisateur.iceAgLoc;
-    console.log(this.item)
     const formData=this.prepareFormData(this.item);
-    console.log(formData);
     this.service.save(formData).subscribe({
       next:(data)=>{
         if(data==1){
@@ -189,9 +183,7 @@ export class CreatVoitureComponent  implements OnInit, AfterViewInit {
           this.display=false;
           this.getAll();
         }
-        else {
-          console.log(data)
-        }
+
       }
     })
 
@@ -282,7 +274,6 @@ export class CreatVoitureComponent  implements OnInit, AfterViewInit {
 
 
   EditObject() {
-    console.log(this.selectedVoitureItem)
     this.item.images=this.selectedVoitureItem.images;
     this.item.agenceLocation.iceAgLoc=this.authService.dataUtilisateur.iceAgLoc;
 
@@ -337,8 +328,6 @@ export class CreatVoitureComponent  implements OnInit, AfterViewInit {
         if(data==1){
           this.display=false
           this.getAll();
-        }else{
-          console.log(data);
         }
       }
     })

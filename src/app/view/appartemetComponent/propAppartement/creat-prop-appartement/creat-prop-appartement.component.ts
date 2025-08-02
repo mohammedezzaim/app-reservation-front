@@ -30,11 +30,8 @@ export class CreatPropAppartementComponent implements OnInit{
 
       next: (response: number) => {
 
-        console.log(response)
         if (response === -1) {
 
-        } else if (response === -2) {
-          console.log("mohammed l3z!!")
         } else if (response === -3) {
           // Traitement pour le cas où l'enregistrement a échoué avec le code -3
         } else if (response === 1) {
@@ -82,7 +79,6 @@ export class CreatPropAppartementComponent implements OnInit{
       next:data=>{
         // console.log(data)
         this._service._appartemetsByCin=data
-        console.log(this._service._appartemetsByCin)
         this.router.navigateByUrl("/listComponent")
 
       },

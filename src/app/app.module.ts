@@ -39,7 +39,7 @@ import { ListCategorieVoitureComponent } from './view/voitureComponent/categorie
 import { CreatVoitureComponent } from './view/voitureComponent/voiture/creat-voiture/creat-voiture.component';
 import { EditVoitureComponent } from './view/voitureComponent/voiture/edit-voiture/edit-voiture.component';
 import { ListVoitureComponent } from './view/voitureComponent/voiture/list-voiture/list-voiture.component';
-import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule, provideHttpClient, withFetch} from "@angular/common/http";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NavbarComponent} from "./layout/navbar/navbar.component";
 import {NoteAuthorizedComponent} from "./security/note-authorized/note-authorized.component";
@@ -108,6 +108,7 @@ import { ChatComponent } from './layout/chat/chat.component';
 import { PaiementComponent } from './layout/paiement/paiement.component';
 import {MatDialogContent} from "@angular/material/dialog";
 import {CarouselModule} from "primeng/carousel";
+import { BaseCarouselComponent } from './shared/components/base-carousel.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
    return new TranslateHttpLoader(http);
@@ -248,7 +249,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     {provide: HTTP_INTERCEPTORS, useClass: AppHtppEzInterceptor, multi: true},
     provideAnimationsAsync(),
     provideNativeDateAdapter(),
-    DatePipe
+    DatePipe,
+    provideHttpClient(withFetch()),
+    provideClientHydration()
   ],
   exports: [
     CarouselTestComponent

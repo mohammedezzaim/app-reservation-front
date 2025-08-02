@@ -38,8 +38,6 @@ export class CreatLocationComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.getAll();
-
-    console.log(this.dataSource)
   }
 
 
@@ -55,13 +53,9 @@ export class CreatLocationComponent implements OnInit, AfterViewInit {
       next:(data)=>{
         this.items=data;
         this.dataSource = new MatTableDataSource<any>(this.items);
-        if(data.length!=0){
-          console.log("DATA"+data);
-          console.log("this.items"+this.items);
-        }
       },
       error:(err)=>{
-        console.log('verifier getAll contrat');
+        console.log('verifier getAll contrat'+err);
       }
     })
   }
@@ -71,9 +65,6 @@ export class CreatLocationComponent implements OnInit, AfterViewInit {
         if(data==1){
           this.submitted = true;
           this.display=false;
-        }
-        else {
-          console.log(data)
         }
       }
     })
@@ -137,12 +128,10 @@ export class CreatLocationComponent implements OnInit, AfterViewInit {
 
     this.service.get(ref).subscribe({
       next:(data)=>{
-        console.log("data"+data.ref)
         this.contrat=data;
-        console.log("this.contrat"+this.contrat.dateFacture)
       },
       error:(err)=>{
-        console.log('verifier getByRef contrat');
+        console.log('verifier getByRef contrat'+err);
       }
     })
   }

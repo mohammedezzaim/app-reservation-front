@@ -1,112 +1,98 @@
-import {AfterViewInit, Component, ElementRef, OnInit, Renderer2, ViewChild} from '@angular/core';
-import {Router} from "@angular/router";
-import {AppartemetService} from "../../sahred/service/appartemetService/appartemet.service";
-import {Appartement} from "../../sahred/model/appartemetModel/appartement.model";
-import {CategoriesAppartemet} from "../constant-app/villes-maroc.module";
-import {CategoriesAppartementService} from "../../sahred/service/appartemetService/categories-appartement.service";
+import { Component, ElementRef, Inject, PLATFORM_ID, Renderer2, ViewChild } from '@angular/core';
+import { Router } from "@angular/router";
+import { AppartemetService } from "../../sahred/service/appartemetService/appartemet.service";
+import { Appartement } from "../../sahred/model/appartemetModel/appartement.model";
+import { CategoriesAppartementService } from "../../sahred/service/appartemetService/categories-appartement.service";
+import { BaseCarouselComponent } from '../../shared/components/base-carousel.component';
 
 @Component({
   selector: 'app-carousel-with-filter-app',
   templateUrl: './carousel-with-filter-app.component.html',
-  styleUrl: './carousel-with-filter-app.component.css'
+  styleUrls: ['./carousel-with-filter-app.component.css']
 })
-export class CarouselWithFilterAPPComponent implements OnInit
-{
-
-  public listCategories:any[]=[]
-  public display:boolean = false;
-  public formatcard:boolean = false;
-  public selected:boolean = true;
+export class CarouselWithFilterAPPComponent extends BaseCarouselComponent {
+  public listCategories: any[] = [];
+  public display: boolean = false;
+  public formatcard: boolean = false;
+  public selected: boolean = true;
   h1Content: string = '';
-  public dataApp:Array<Appartement>=new Array<Appartement>();
-  // Utilisation de @ViewChild pour obtenir une référence à l'élément <div> avec la classe "info"
-  @ViewChild('infoDiv', {static: false}) infoDiv!: ElementRef;
-  constructor(private renderer: Renderer2, private el: ElementRef, private router:Router,private appService:AppartemetService,
-              private categoriesService:CategoriesAppartementService
-  )
-  {
+  public dataApp: Array<Appartement> = [];
+
+  @ViewChild('infoDiv', { static: false }) infoDiv!: ElementRef;
+
+  constructor(
+    protected override renderer: Renderer2,
+    protected override el: ElementRef,
+    @Inject(PLATFORM_ID) protected override platformId: Object,
+    private router: Router,
+    private appService: AppartemetService,
+    private categoriesService: CategoriesAppartementService
+  ) {
+    super(renderer, el, platformId);
   }
 
-
-  ngOnInit()
-  {
+   ngOnInit() {
     this.getAllaCategoriesApparatemet();
+  }
+
+  protected override initializeCarousel(): void {
     this.initSlider();
   }
 
-  getAllaCategoriesApparatemet(){
-    console.log("######################")
-    this.categoriesService.getAll().subscribe(
-      {
-         next:data=>{
-           console.log(data)
-           this.listCategories=data
-         },
-         error:err => {}
-      }
-    )
-    console.log("######################")
+  private initSlider(): void {
+    const imageList = this.safeQuerySelector(".slider-wrapper .image-list");
+    const slideButtons = this.safeQuerySelectorAll(".slider-wrapper .slide-button");
+    const sliderScrollbar = this.safeQuerySelector(".container .slider-scrollbar");
 
-  }
-  initSlider()
-  {
-    const imageList = this.el.nativeElement.querySelector(".slider-wrapper .image-list");
-    const slideButtons = this.el.nativeElement.querySelectorAll(".slider-wrapper .slide-button");
-    const sliderScrollbar = this.el.nativeElement.querySelector(".container .slider-scrollbar");
-    const scrollbarThumb = sliderScrollbar.querySelector(".scrollbar-thumb");
-    const maxScrollLeft = imageList.scrollWidth - imageList.clientWidth;
-
+    if (!imageList || !slideButtons || !sliderScrollbar) return;
 
     slideButtons.forEach((button: HTMLElement) => {
       this.renderer.listen(button, 'click', () => {
         const direction = button.id === "prev-slide" ? -1 : 1;
         const scrollAmount = imageList.clientWidth * direction;
-        imageList.scrollBy({left: scrollAmount, behavior: "smooth"});
+        imageList.scrollBy({ left: scrollAmount, behavior: "smooth" });
       });
     });
 
-    // Gestion du redimensionnement de la fenêtre
     this.renderer.listen(window, 'resize', () => {
-      // Réinitialise le slider en cas de redimensionnement
       this.initSlider();
     });
   }
 
-  RedirectToFacture()
-  {
+  getAllaCategoriesApparatemet() {
+    this.categoriesService.getAll().subscribe({
+      next: data => {
+        this.listCategories = data;
+      },
+      error: err => {}
+    });
+  }
+
+  RedirectToFacture() {
     this.display = true;
   }
 
-  handelVertical()
-  {
-    this.formatcard = false
+  handelVertical() {
+    this.formatcard = false;
   }
-  handelHorizental()
-  {
+
+  handelHorizental() {
     this.formatcard = true;
-
   }
 
-  getH1Content(h1Element:string) {
-
+  getH1Content(h1Element: string) {
     this.appService.getAppartemetsbyLibelle(h1Element).subscribe({
-      next:(data)=>{
-        this.dataApp=data;
+      next: (data) => {
+        this.dataApp = data;
       }
-    })
-
+    });
   }
 
-
-
-
-  protected readonly HTMLElement = HTMLElement;
-
-  returnUrl(appartemet: any):string {
-    return appartemet.imagePaths[0]
+  returnUrl(appartemet: any): string {
+    return appartemet.imagePaths[0];
   }
 
-  returnUrlOne(categories: any):string {
-    return categories.imagePaths
+  returnUrlOne(categories: any): string {
+    return categories.imagePaths;
   }
 }

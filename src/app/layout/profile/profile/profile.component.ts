@@ -44,7 +44,6 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.authService.roles)
     if(this.authService.roles.includes("MANAGER-VOI")){
       this.getAgence();
     }
@@ -58,10 +57,8 @@ export class ProfileComponent implements OnInit {
   getClient(){
     this.clientService.getByusername(this.authService.username).subscribe({
         next:data=>{
-          console.log("data de getByUserName..."+data)
           this.client=data;
 
-          console.log(this.client)
         },
         error:err => {
           console.log("error"+err)
@@ -73,11 +70,7 @@ export class ProfileComponent implements OnInit {
   getAgence(){
     this.agenceLocationService.getByusername(this.authService.username).subscribe({
         next:data=>{
-          console.log("data de getByUserName..."+data)
           this.agence=data;
-
-          console.log(this.agence)
-          console.log(data)
         },
         error:err => {
           console.log("error"+err)
@@ -89,11 +82,9 @@ export class ProfileComponent implements OnInit {
   getPropre(){
     this.propAppartementService.getByusername(this.authService.username).subscribe({
         next:data=>{
-          console.log("data de getByUserName..."+data)
           this.prop=data;
 
-          console.log(this.prop)
-          console.log(data)
+
         },
         error:err => {
           console.log("error"+err)
@@ -102,7 +93,6 @@ export class ProfileComponent implements OnInit {
     )
   }
   updateClient(): void {
-    console.log(this.client);
     this.client.cin = this.authService.dataUtilisateur.cin
     this.client.propAppartemenetDto = new AgenceAppartement()
     this.client.agenceLocation= new AgenceLocation();
@@ -111,8 +101,7 @@ export class ProfileComponent implements OnInit {
         if (data === 1) {
           alert("mise à jour est effectuee avec succes ");
           this.router.navigateByUrl("/profile")
-        } else
-          console.log(data);
+        }
       },
       error:err=>{
         console.log(err)
@@ -130,8 +119,7 @@ export class ProfileComponent implements OnInit {
         if (data === 1) {
           alert("le mise à jour effectue avec succes ")
           this.router.navigateByUrl("/profile")
-        } else
-          console.log(data);
+        }
       },
       error:err => {
         console.log(err)
@@ -151,8 +139,6 @@ export class ProfileComponent implements OnInit {
           window.URL.createObjectURL(file)
         )
       }
-       console.log("Teste::2024")
-       console.log(fileHandle)
        this.prop.images=fileHandle
        this.isExisteLogo=true
     }
@@ -214,14 +200,11 @@ export class ProfileComponent implements OnInit {
   updateAgence(): void {
     this.agence.usernameAgenceLoc=this.authService.username;
     const preparData=this.prepareFormDataAgence(this.agence)
-    console.log(preparData)
     this.agenceLocationService.update(preparData).subscribe({
       next: (data) => {
         if (data === 1) {
-          console.log("1")
           this.router.navigateByUrl(`/profile`)
-        } else
-          console.log(data);
+        }
       },
       error:err=>{
         console.log(err)

@@ -38,8 +38,6 @@ public ListeColum = [
 
   ngOnInit(): void {
     this.getAll();
-
-    console.log(this.dataSource)
   }
 
 
@@ -56,11 +54,9 @@ public getAll(){
 
         this.items=data;
         this.dataSource = new MatTableDataSource<any>(this.items);
-
-        if(data.length!=0){console.log(data); console.log(this.items)}
       },
       error:(err)=>{
-        console.log('verifier getAll categorie Voiture');
+        console.log('verifier getAll categorie Voiture'+err);
       }
     })
   }
@@ -84,9 +80,6 @@ public getAll(){
           this.submitted = true;
           this.display=false;
           this.getAll();
-        }
-        else {
-          console.log(data)
         }
       }
     })

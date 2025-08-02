@@ -31,8 +31,6 @@ export class CreatAgenceLocationComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.getAll();
-
-    console.log(this.dataSource)
   }
 
 
@@ -45,17 +43,12 @@ export class CreatAgenceLocationComponent implements OnInit, AfterViewInit {
   public getAll() {
     this.service.getAll().subscribe({
       next: (data) => {
-        console.log(data);
         this.items = data;
         this.dataSource = new MatTableDataSource<any>(this.items);
 
-        if (data.length != 0) {
-          console.log(data);
-          console.log(this.items)
-        }
+
       },
       error: (err) => {
-        console.log('verifier getAll Agence de Location');
         console.error(err);
       }
     })
@@ -73,8 +66,6 @@ export class CreatAgenceLocationComponent implements OnInit, AfterViewInit {
           this.submitted = true;
           this.display = false;
           alert('ok')
-        } else {
-          console.log(data)
         }
       }
     })

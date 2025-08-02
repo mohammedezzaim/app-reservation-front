@@ -84,7 +84,6 @@ export class DragDirective {
   @HostListener("drop", ["$event"])
   public onDrop(evt: DragEvent) {
     // @ts-ignore
-    console.log(evt.dataTransfer.files[0]);
     evt.preventDefault();
     evt.stopPropagation();
 

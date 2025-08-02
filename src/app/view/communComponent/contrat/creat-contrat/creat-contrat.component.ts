@@ -41,13 +41,11 @@ export class CreatContratComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.getAll();
 
-    console.log(this.dataSource)
   }
 
 
 
   ngAfterViewInit(): void {
-    console.log("this.paginator"+this.paginator)
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort=this.sort;
   }
@@ -61,13 +59,9 @@ export class CreatContratComponent implements OnInit, AfterViewInit {
         this.items=data;
         this.dataSource = new MatTableDataSource<any>(this.items);
         this.dataSource.paginator = this.paginator;
-        if(data.length!=0){
-          console.log("DATA"+data);
-          console.log("this.items"+this.items);
-        }
       },
       error:(err)=>{
-        console.log('verifier getAll contrat');
+        console.log('verifier getAll contrat'+err);
       }
     })
   }
@@ -80,9 +74,6 @@ export class CreatContratComponent implements OnInit, AfterViewInit {
           this.hideDialog()
 
           this.getAll();
-        }
-        else {
-          console.log(data)
         }
       }
     })
@@ -125,10 +116,9 @@ export class CreatContratComponent implements OnInit, AfterViewInit {
       next:(data)=>{
 
         this.contrat=data;
-        console.log(this.contrat)
       },
       error:(err)=>{
-        console.log('verifier getByRef contrat');
+        console.log('verifier getByRef contrat'+err);
       }
     })
   }

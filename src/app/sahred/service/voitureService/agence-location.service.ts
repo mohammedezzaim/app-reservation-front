@@ -65,7 +65,6 @@ export class AgenceLocationService {
     this.item.iceAgLoc=iceAgLoc;
     this.item.usernameAgenceLoc=username;
     this.item.password=password;
-    console.log(this.item)
     return  this.http.post<any>("https://safarent-backend.up.railway.app/api/agenceLocation/", this.item)
   }
 }

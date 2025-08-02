@@ -58,7 +58,6 @@ export class ReservationInformationComponent  implements OnInit{
     this.getDataByUsername();
     this.route.params.subscribe(params => {
       this.matricule = params['matricule'];
-      console.log(this.matricule);
 
     });
     this.getVoitureByMatricule();
@@ -67,8 +66,6 @@ export class ReservationInformationComponent  implements OnInit{
   public voitureDataImages:any;
 
   returnUrl(voiture:any):string{
-    console.log("verifier data:::")
-    console.log(this.voitureDataImages)
     return voiture.imagePaths[0]
   }
 
@@ -77,7 +74,6 @@ export class ReservationInformationComponent  implements OnInit{
       next:data=>{
         this.voitureData=data ;
         this.voitureDataImages=data;
-        console.log(data)
       },
       error:err=>{console.log(err)}
     })
@@ -144,15 +140,11 @@ export class ReservationInformationComponent  implements OnInit{
     this.reservationService.findReservationbyVoitureMatricule(this.matricule).subscribe({
       next:data=>{
         this.dataReservationVoiture=data;
-        console.log(this.dataReservationVoiture);
 
         this.tableauDate = this.dataReservationVoiture.map(e => ({
           dateDebut: e.dateDebut,
           dateFin: e.dateFin
         }));
-
-        console.log("tableau de dates");
-        console.log(this.tableauDate);
 
 
         for (let i = 0; i < this.tableauDate.length; i++) {
@@ -169,8 +161,7 @@ export class ReservationInformationComponent  implements OnInit{
           }
         }
 
-        console.log("days");
-        console.log(this.days.toString());
+
       }
     });
   }
@@ -238,15 +229,11 @@ export class ReservationInformationComponent  implements OnInit{
 
   onDateInput(event: MatDatepickerInputEvent<Date>) {
     this.maDate = event.value!;
-    console.log("this.maDate")
-    console.log(this.maDate)
     const formattedDate: string = this.datePipe.transform(this.maDate, 'yyyy-MM-dd')!;
-    console.log('Formatted Date:', formattedDate);
 
     const dateObject: Date = new Date(this.maDate);
     const dateNumber: number = dateObject.getTime();
 
-    console.log('Date Number:', dateNumber); // Affiche le nombre de millisecondes depuis l'époque
 
 
     this.maDate2 = new Date(this.maDate); // Clonage de maDate
@@ -257,7 +244,7 @@ export class ReservationInformationComponent  implements OnInit{
 
 
   dateSelected(event: MatDatepickerInputEvent<Date>) {
-    console.log('Selected date:', event.value);
+    console.log();
   }
 
   decrement() {
@@ -281,17 +268,7 @@ export class ReservationInformationComponent  implements OnInit{
   }
 
   logDates() {
-    console.log('nbrJours:', this.nbrJours);
-    console.log('maDate:', this.maDate.toLocaleDateString('en-US', {
-      month: '2-digit',
-      day: '2-digit',
-      year: 'numeric'
-    }));
-    console.log('maDate2:', this.maDate2.toLocaleDateString('en-US', {
-      month: '2-digit',
-      day: '2-digit',
-      year: 'numeric'
-    }));
+
   }
 
 
@@ -323,8 +300,6 @@ export class ReservationInformationComponent  implements OnInit{
 
           this.getReseravtionbyMatricule()
           this.ngOnInit()
-        } else {
-          console.log(data)
         }
       }
     })
@@ -341,8 +316,6 @@ export class ReservationInformationComponent  implements OnInit{
 
   handlReserve() {
     if(this.authService.isAuthService) {
-    console.log(this.maDate2, 'yyyy-MM-dd')
-    console.log(this.maDate, 'yyyy-MM-dd')
     this.item.dateFin = this.datePipe.transform(this.maDate2, 'yyyy-MM-dd')!;
     this.item.dateDebut = this.datePipe.transform(this.maDate, 'yyyy-MM-dd')!;
 
@@ -370,13 +343,7 @@ export class ReservationInformationComponent  implements OnInit{
     this.item.client.numTeleClient = this.authService.dataUtilisateur.numTeleClient;
     this.item.client.email_Client = this.authService.dataUtilisateur.email_Client;
     this.item.client.prenom = this.authService.dataUtilisateur.prenom;
-    // this.item.client.id =this.authService.dataUtilisateur.id;
-    console.log("this.item")
-    console.log(this.item)
     this.saveObject();
-    console.log("this.authService.client.cin===>" + this.authService.dataUtilisateur.cin)
-    // console.log("this.authService.client.id===>"+this.authService.client.id)
-    console.log("this.authService.dataUtilisateur.id===>" + this.authService.dataUtilisateur.id)
 
 
 
@@ -407,7 +374,7 @@ export class ReservationInformationComponent  implements OnInit{
       next: (data)=>{
         if(data==1){
 
-          console.log(data);
+
 
         }
 

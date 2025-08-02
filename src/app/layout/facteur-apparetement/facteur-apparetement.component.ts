@@ -46,7 +46,6 @@ export class FacteurApparetementComponent implements OnInit {
     this.toggleHoverEffect(defaultActiveElement);
     this.route.params.subscribe(params => {
       this.code = params['code'];
-      console.log(this.code);
     });
     this.getApparetementByCode();
     this.getReservationApp();
@@ -102,7 +101,6 @@ export class FacteurApparetementComponent implements OnInit {
   getApparetementByCode() {
     this.appartementService.get(this.code).subscribe({
       next: data => {
-        console.log(data)
         this.apparetement = data;
         this.appartemetDataImages=data
       },
@@ -116,15 +114,11 @@ export class FacteurApparetementComponent implements OnInit {
     this.reservationService.findReservationbyAppCode(this.code).subscribe({
       next:data => {
         this.dataReservationAppartement = data;
-        console.log("this.dataReservationAppartement");
-        console.log(this.dataReservationAppartement);
         this.tableauDate = this.dataReservationAppartement.map(e => ({
           dateDebut: e.dateDebut,
           dateFin: e.dateFin
         }));
 
-        console.log("tableau de dates");
-        console.log(this.tableauDate);
 
 
         for (let i = 0; i < this.tableauDate.length; i++) {
@@ -141,8 +135,6 @@ export class FacteurApparetementComponent implements OnInit {
           }
         }
 
-        console.log("days");
-        console.log(this.days.toString());
       }
     });
   }
@@ -187,15 +179,11 @@ export class FacteurApparetementComponent implements OnInit {
 
   onDateInput(event: MatDatepickerInputEvent<Date>) {
     this.maDate = event.value!;
-    console.log("this.maDate")
-    console.log(this.maDate)
     const formattedDate: string = this.datePipe.transform(this.maDate, 'yyyy-MM-dd')!;
-    console.log('Formatted Date:', formattedDate);
 
     const dateObject: Date = new Date(this.maDate);
     const dateNumber: number = dateObject.getTime();
 
-    console.log('Date Number:', dateNumber); // Affiche le nombre de millisecondes depuis l'époque
 
 
     this.maDate2 = new Date(this.maDate); // Clonage de maDate
@@ -237,17 +225,7 @@ export class FacteurApparetementComponent implements OnInit {
   }
 
   logDates() {
-    console.log('nbrJours:', this.nbrJours);
-    console.log('maDate:', this.maDate.toLocaleDateString('en-US', {
-      month: '2-digit',
-      day: '2-digit',
-      year: 'numeric'
-    }));
-    console.log('maDate2:', this.maDate2.toLocaleDateString('en-US', {
-      month: '2-digit',
-      day: '2-digit',
-      year: 'numeric'
-    }));
+
   }
 
 
@@ -280,8 +258,6 @@ export class FacteurApparetementComponent implements OnInit {
           this.displaysucces = true;
           this.getReservationApp()
           this.ngOnInit()
-        } else {
-          console.log(data)
         }
       }
     })
@@ -299,8 +275,6 @@ export class FacteurApparetementComponent implements OnInit {
 
   handlReserve(){
     if(this.authService.isAuthService) {
-      console.log(this.maDate2, 'yyyy-MM-dd')
-      console.log(this.maDate, 'yyyy-MM-dd')
       this.item.dateFin = this.datePipe.transform(this.maDate2, 'yyyy-MM-dd')!;
       this.item.dateDebut = this.datePipe.transform(this.maDate, 'yyyy-MM-dd')!;
 
@@ -323,12 +297,8 @@ export class FacteurApparetementComponent implements OnInit {
       this.item.client.email_Client = this.authService.dataUtilisateur.email_Client;
       this.item.client.prenom = this.authService.dataUtilisateur.prenom;
       // this.item.client.id =this.authService.dataUtilisateur.id;
-      console.log("this.item")
-      console.log(this.item)
       this.saveObject();
-      console.log("this.authService.client.cin===>" + this.authService.dataUtilisateur.cin)
       // console.log("this.authService.client.id===>"+this.authService.client.id)
-      console.log("this.authService.dataUtilisateur.id===>" + this.authService.dataUtilisateur.id)
       //notifiacation :
       this.nItem.code = this.generateRandomCode(5);
       this.nItem.dateFinReservation = this.datePipe.transform(this.maDate2, 'yyyy-MM-dd')!;
@@ -351,8 +321,6 @@ export class FacteurApparetementComponent implements OnInit {
   public appartemetDataImages:any;
 
   returnUrl(apartement:any):string{
-    console.log("verifier data:::")
-    console.log(this.appartemetDataImages)
     return apartement.imagePaths[0]
   }
 
@@ -362,7 +330,8 @@ export class FacteurApparetementComponent implements OnInit {
       next: (data)=>{
         if(data==1){
           alert("la notification est save avec s'acces");
-        }else console.log(data);
+        }
+    
       }
     })
 

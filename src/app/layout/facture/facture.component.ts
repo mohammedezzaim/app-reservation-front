@@ -24,8 +24,6 @@ export class FactureComponent implements OnInit{
     this.locationService.findLocationByReservationRef(this.locationService.refLocation).subscribe({
       next:data=>{
         this.dataLocation=data;
-        console.log("dataLocationByReservationRef");
-        console.log(this.dataLocation)
       },
       error:err=>{console.log(err)}
     })

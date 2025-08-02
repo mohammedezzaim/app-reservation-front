@@ -146,7 +146,6 @@ export class LoginComponent implements OnInit {
       const passwordConfirmControl = this.signUpForm.get("confirpassword");
 
       if ((this.agenceRadio) && (usernameControl?.valid && passwordControl?.valid && iceAgLoc?.valid) && (passwordControl?.value==passwordConfirmControl?.value)) {
-        console.log("Tous les champs sont valides");
         this.submit = true;
       }
       else {
@@ -173,7 +172,6 @@ export class LoginComponent implements OnInit {
       const passwordConfirmControl = this.signUpForm.get("confirpassword");
 
       if ((this.userRadio||this.propRadio) && (usernameControl?.valid && passwordControl?.valid && cinControl?.valid) && (passwordControl?.value==passwordConfirmControl?.value)) {
-        console.log("Tous les champs sont valides");
         this.submit = true;
       }else {
         this.submit = false;
@@ -199,7 +197,6 @@ export class LoginComponent implements OnInit {
       const passwordConfirmControl = this.signUpForm.get("confirpassword");
 
       if ((this.userRadio||this.propRadio) && (usernameControl?.valid && passwordControl?.valid && cinControl?.valid) && (passwordControl?.value==passwordConfirmControl?.value)) {
-        console.log("Tous les champs sont valides");
         this.submit = true;
       }
       else  this.submit = !!((this.agenceRadio) && (usernameControl?.valid && passwordControl?.valid && iceAgLocControl?.valid) && (passwordControl?.value == passwordConfirmControl?.value));
@@ -218,7 +215,6 @@ export class LoginComponent implements OnInit {
    else if (!passwordControl?.valid) {
       this.passInput = true
       this.submit=false;
-      console.log("1")
     }
     else {
       const usernameControl = this.signUpForm.get("username");
@@ -228,7 +224,6 @@ export class LoginComponent implements OnInit {
       const iceAgLocControl = this.signUpForm.get("iceAgLoc");
 
       if (this.userRadio && usernameControl?.valid && passwordControl?.valid && cinControl?.valid && passwordControl?.value==passwordConfirmControl?.value) {
-        console.log("Tous les champs sont valides");
         this.submit = true;
       }
       else  this.submit = !!((this.agenceRadio) && (usernameControl?.valid && passwordControl?.valid && iceAgLocControl?.valid) && (passwordControl?.value == passwordConfirmControl?.value));
@@ -244,7 +239,6 @@ export class LoginComponent implements OnInit {
       this.submit = false;
     }
   else  if (confirmPasswordValue !== this.signUpForm.value.password ) {
-      console.log("Les mots de passe ne correspondent pas");
       this.confirmPassInput = true;
       this.submit = false;
     }    else {
@@ -255,7 +249,6 @@ export class LoginComponent implements OnInit {
 
 
       if ((this.userRadio||this.propRadio)&& usernameControl?.valid && passwordControl?.valid && cinControl?.valid ) {
-        console.log("Tous les champs sont valides");
         this.submit = true;
       }
       else  this.submit = !!((this.agenceRadio) && (usernameControl?.valid && passwordControl?.valid && iceAgLocControl?.valid));
@@ -263,7 +256,6 @@ export class LoginComponent implements OnInit {
   }
 
   handleCreat() {
-    console.log("handleCreat")
     if (!this.userRadio && !this.propRadio && !this.agenceRadio) {
       return;
     }
@@ -302,7 +294,6 @@ export class LoginComponent implements OnInit {
       this.authService.propAppartement.password = this.signUpForm.value.password;
       this.authService.propAppartement.iceAgApp = this.signUpForm.value.cin;
 
-      console.log(this.authService.propAppartement)
       this.authService.creeCompte2(this.authService.propAppartement).subscribe(
         {
           next: data => {
@@ -334,8 +325,6 @@ export class LoginComponent implements OnInit {
       this.authService.agenceLocation.usernameAgenceLoc = this.signUpForm.value.username;
       this.authService.agenceLocation.password = this.signUpForm.value.password;
       this.authService.agenceLocation.iceAgLoc = this.signUpForm.value.iceAgLoc;
-      console.log("Number validite")
-      console.log(this.authService.agenceLocation.iceAgLoc)
 
       this.authService.creeCompte3(this.authService.agenceLocation).subscribe(
         {
@@ -404,7 +393,6 @@ export class LoginComponent implements OnInit {
     this.authService.login(username,password).subscribe(
       {
         next :data => {
-          console.log("1")
           this.isConnected=true;
 
           this.authService.loadProfile(data)

@@ -91,13 +91,10 @@ export class AuthService {
     // @ts-ignore
     this.getByUsername(this.username).subscribe(
       {next:data=>{
-          console.log(data)
           this.dataUtilisateur=data
-          console.log("=========================================")
-          console.log(this.dataUtilisateur)
-          console.log("=========================================")
+
         },
-        error:err => {console.log("error")}
+        error:err => {console.log(err)}
       }
     )
 
@@ -164,7 +161,6 @@ export class AuthService {
       return this.http.get<any>(`https://safarent-backend.up.railway.app/api/agenceAppartement/username/${username}`);
     }
     else if(this.isAgenceLocation){
-      console.log("hello word")
       return this.http.get<any>(`https://safarent-backend.up.railway.app/api/agenceLocation/username/${username}`);
     }
     else {

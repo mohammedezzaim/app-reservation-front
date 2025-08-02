@@ -45,7 +45,6 @@ export class AgenceAppartementService {
   }
 
   public  update(agenceAppartementFormData:FormData):Observable<any>{
-    console.log(agenceAppartementFormData)
     return this.http.put("https://safarent-backend.up.railway.app/api/agenceAppartement/",agenceAppartementFormData)
   }
 
@@ -63,7 +62,6 @@ export class AgenceAppartementService {
     this.item.iceAgApp=cin;
     this.item.username=username;
     this.item.password=password;
-    console.log(this.item)
     return  this.http.post<any>("https://safarent-backend.up.railway.app/api/agenceAppartement/", this.item)
   }
 

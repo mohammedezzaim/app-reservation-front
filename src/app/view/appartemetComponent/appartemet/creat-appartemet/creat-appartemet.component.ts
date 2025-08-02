@@ -70,9 +70,6 @@ export class CreatAppartemetComponent implements OnInit,AfterViewInit{
     this.getAllCategorie();
     this.viderItemSelected();
     this.getAll()
-    console.log("==========================================")
-    console.log(this.authService.dataUtilisateur)
-    console.log("==========================================")
   }
 
 
@@ -108,7 +105,6 @@ export class CreatAppartemetComponent implements OnInit,AfterViewInit{
   }
 
   saveObject() {
-    console.log(this.authService.dataUtilisateur)
     this.item.propAppartemenetDto.iceAgApp=this.authService.dataUtilisateur.iceAgApp
     this.save();
     this.submitted = true;
@@ -147,10 +143,7 @@ export class CreatAppartemetComponent implements OnInit,AfterViewInit{
 
 
   updateObject() {
-    console.log("item prev :")
-    console.log(this.selectedAppartementItem)
-    console.log("item new :")
-    console.log(this.item)
+
 
     this.item.images=this.selectedAppartementItem.images;
     this.item.propAppartemenetDto=this.selectedAppartementItem.propAppartemenetDto
@@ -177,7 +170,6 @@ export class CreatAppartemetComponent implements OnInit,AfterViewInit{
       this.item.climatiseur =this.selectedAppartementItem.climatiseur;
     }
     if(this.item.categoriesAppartementDto.libelle == ''){
-      console.log("categoriesAppartement")
       this.item.categoriesAppartementDto=this.selectedAppartementItem.categoriesAppartementDto
     }
     this.update();
@@ -189,7 +181,6 @@ export class CreatAppartemetComponent implements OnInit,AfterViewInit{
       // @ts-ignore
       const  file=$event.target.files[0];
 
-      console.log(file);
       const fileHandle:FileHandle={
         file:file,
         url: this.sanitizer.bypassSecurityTrustUrl(
@@ -218,15 +209,8 @@ export class CreatAppartemetComponent implements OnInit,AfterViewInit{
   //1-save
   public save() {
     const  productFormData=this.prepareFormData(this.appartemetService.item);
-    console.log("++!++")
-    console.log(productFormData)
-    console.log("appartemet item :")
-    console.log(this.appartemetService.item)
-    console.log("productFormData  :")
-    console.log(productFormData)
     this.appartemetService.save(productFormData).subscribe({
       next: response => {
-        console.log(response)
         if (response === -1) {
         } else if (response === -2) {
         } else if (response === -3) {
@@ -272,7 +256,6 @@ export class CreatAppartemetComponent implements OnInit,AfterViewInit{
       next:() => {
         let images=appatemet.imagePaths
         for(let i=0;i<images.length;i++){
-          console.log(images[i])
           // this.removeFromCloudinary(images[i])
         }
 
@@ -308,17 +291,12 @@ export class CreatAppartemetComponent implements OnInit,AfterViewInit{
   public  update():any{
     this.item.code=this.selectedAppartementItem.code
     this.item.images=this.selectedAppartementItem.images
-    console.log("data::::")
-    console.log(this.item)
-    console.log(this.selectedAppartementItem)
+
     return this.appartemetService.update(this.item).subscribe({
       next:data=>{
         if(data==1){
           this.getAll();
           this.display=false;
-          console.log(data)
-        }else {
-          console.log(data)
         }
 
       },

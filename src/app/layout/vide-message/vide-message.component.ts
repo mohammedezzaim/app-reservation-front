@@ -20,7 +20,6 @@ export class VideMessageComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.username = params['username'];
-      console.log(this.username);
     });
     this.getAll()
     this.findAllBySenderAndRecipient();
@@ -35,8 +34,6 @@ export class VideMessageComponent implements OnInit {
   findAllBySenderAndRecipient(){
     this.chatService.getAllBySenderAndRecipient(this.authService.username , this.username).subscribe({
       next:data=>{
-        console.log("data:>>")
-        console.log(data)
         this.dataChatRecipientandsender=data;
       },
       error:err => {
@@ -68,8 +65,7 @@ export class VideMessageComponent implements OnInit {
   getAll(){
     this.chatService.getALl().subscribe({
       next:data=>{
-        console.log("lwojiedqedjhweio")
-        console.log(data)
+
         this.dataChat=data;
       },
       error:err => {

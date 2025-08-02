@@ -55,9 +55,6 @@ export class NotificationInfoComponent implements OnInit{
 
   ngOnInit(): void {
     this.getAllByCinClient();
-    console.log("rwfwef")
-    console.log(this.notificationClient)
-    console.log(this.authService.roles)
     this.getALlByIceAgence()
 
 
@@ -80,10 +77,7 @@ export class NotificationInfoComponent implements OnInit{
     if(this.authService.roles.includes("MANAGER-APT")){this.ice=this.authService.dataUtilisateur.iceAgApp}
     this.notifiactionService.getALlByIceAgence(this.ice).subscribe({
       next:data=>{
-        console.log(this.ice)
         this.dataByIceAgence=data;
-        console.log("dataByIceAgence")
-        console.log(data)
       },
       error:err=>{console.log(err)}
     })
@@ -92,8 +86,6 @@ export class NotificationInfoComponent implements OnInit{
     this.notifiactionService.getALlByCinClient(this.authService.dataUtilisateur.cin).subscribe({
           next:(data)=>{
             this.notificationClient=data;
-            console.log("data de cleint abdelilahd")
-            console.log(data);
           }
         }
     )
@@ -104,7 +96,6 @@ export class NotificationInfoComponent implements OnInit{
     this.clientService.getByCin(cin).subscribe({
       next:data=>{
         this.dataClientByCin=data;
-        console.log(this.dataClientByCin)
       },
       error:err=>{console.log(err)}
     })
@@ -138,7 +129,6 @@ export class NotificationInfoComponent implements OnInit{
     const jours = difference / (1000 * 60 * 60 * 24);
     // Arrondir le résultat à l'entier le plus proche et le renvoyer
     this.numberJoures= Math.round(jours);
-    console.log(this.numberJoures)
   }
 
   deleteReservationByRef(){
@@ -152,11 +142,8 @@ export class NotificationInfoComponent implements OnInit{
           }, 3000);
           this.displaysuccesDelete = true;
           // this.display=false;
-          console.log("sucss delete")
         }
-        if(data==0){
-          console.log("dejasupperemet")
-        }
+
         this.findReservationByRef()
       },
       error:err => {console.log(err)}
@@ -192,12 +179,8 @@ export class NotificationInfoComponent implements OnInit{
             this.displaysucces = false;
           }, 3000);
           this.displaysucces = true;
-          console.log("location save avec secces")
         }
-        else{
-          console.log("location n'est pas save")
-          console.log(data)
-        }
+
       },
       error:err=>{console.log(err)}
     })
@@ -242,16 +225,7 @@ export class NotificationInfoComponent implements OnInit{
 
   }
   updateNotification(data:Notifiaction){
-    this.notifiactionService.update(data).subscribe({
-      next:data=>{
-        if(data==1){
-          console.log("data is update")
-        }else{
-          console.log(data +" ::probleme")
-        }
-      },
-      error:err=>{console.log(err)}
-    })
+    this.notifiactionService.update(data)
   }
   findLocationByReservationRef(ref:string){
     this.locationService.findLocationByReservationRef(ref).subscribe({
@@ -269,11 +243,7 @@ export class NotificationInfoComponent implements OnInit{
     this.ref=item.refReservation;
     this.locationService.refLocation=item.refReservation;
     item.visibleClinet=true;
-    this.notifiactionService.update(item).subscribe({
-      next:(data)=>{
-        console.log(data);
-      }
-    });
+    this.notifiactionService.update(item)
 
     this.notifiactionSelectionner=item;
   }

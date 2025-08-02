@@ -25,19 +25,23 @@ export class NavbarComponent implements OnInit{
 
   }
 
-  lettere !:string ;
-  premierLettre(){
-    this.lettere = this.authService.username[0];
-    console.log(this.lettere)
+lettere: string = '';
+
+premierLettre() {
+  // Add null checks and provide a fallback
+  if (this.authService.username && this.authService.username.length > 0) {
+    this.lettere = this.authService.username[0].toUpperCase();
+  } else {
+    this.lettere = ''; // or some default like '?'
   }
+}
+
   calculeNumberNotificationPropAppartemet(){
     this.nbrNotification=0
     this.notificationService.getALlCinProp(this.authService.dataUtilisateur.iceAgApp).subscribe({
       next:data=>{
         this.authService.notifications=data
-        console.log(this.authService.notifications)
         this.authService.notifications.map((n)=>{
-          console.log(n)
           if(!n.isVisible){
             this.nbrNotification=this.nbrNotification+1
           }
@@ -52,9 +56,7 @@ export class NavbarComponent implements OnInit{
     this.notificationService.getALlByIceAgence(this.authService.dataUtilisateur.iceAgLoc).subscribe({
       next:data=>{
         this.authService.notifications=data
-        console.log(this.authService.notifications)
         this.authService.notifications.map((n)=>{
-          console.log(n)
           if(!n.isVisible){
             this.nbrNotification=this.nbrNotification+1
           }
@@ -70,9 +72,7 @@ export class NavbarComponent implements OnInit{
     this.notificationService.getALlByCinClient(this.authService.dataUtilisateur.cin).subscribe({
       next:data=>{
         this.authService.notifications=data
-        console.log(this.authService.notifications)
         this.authService.notifications.map((n)=>{
-          console.log(n)
           if(!n.isVisible){
             this.nbrNotification=this.nbrNotification+1
           }
@@ -159,7 +159,6 @@ export class NavbarComponent implements OnInit{
   }
 
   toggleMenu() {
-    console.log(this.isMenuToggle)
     this.isMenuToggle=!this.isMenuToggle;
   }
 

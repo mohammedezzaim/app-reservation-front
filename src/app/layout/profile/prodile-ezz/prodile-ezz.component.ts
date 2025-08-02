@@ -23,7 +23,6 @@ export class ProdileEzzComponent implements OnInit{
   ngOnInit(): void {
     this.premierLettre()
     this.fonctionP()
-    console.log(this.authService.roles)
     if(this.authService.roles.includes("MANAGER-APT")){
       this.getPropre()
     }
@@ -38,10 +37,7 @@ export class ProdileEzzComponent implements OnInit{
   getClient(){
     this.clientService.getByusername(this.authService.username).subscribe({
       next:data=>{
-        console.log("data de getByUserName..."+data)
         this.client=data;
-console.log("data client :::::")
-        console.log(this.client)
       },
       error:err => {
         console.log("error"+err)
@@ -53,11 +49,8 @@ console.log("data client :::::")
   getAgence(){
     this.agenceLocationService.getByusername(this.authService.username).subscribe({
       next:data=>{
-        console.log("data de getByUserName..."+data)
         this.agence=data;
 
-        console.log(this.agence)
-        console.log(data)
       },
       error:err => {
         console.log("error"+err)
@@ -69,11 +62,7 @@ console.log("data client :::::")
   getPropre(){
     this.propAppartementService.getByusername(this.authService.username).subscribe({
       next:data=>{
-        console.log("data de getByUserName..."+data)
         this.propre=data;
-
-        console.log(this.propre)
-        console.log(data)
       },
       error:err => {
         console.log("error"+err)
@@ -98,11 +87,17 @@ console.log("data client :::::")
   //   )
   // }
 
-  lettere !:string ;
-  premierLettre(){
-    this.lettere = this.authService.username[0];
-    console.log(this.lettere)
+lettere: string = '';
+
+premierLettre() {
+  // Add null checks and provide a fallback
+  if (this.authService.username && this.authService.username.length > 0) {
+    this.lettere = this.authService.username[0].toUpperCase();
+  } else {
+    this.lettere = ''; // or some default like '?'
   }
+}
+
   pElement: HTMLElement | null = document.querySelector('p');
   fonctionP(){
     if (window.getSelection) {

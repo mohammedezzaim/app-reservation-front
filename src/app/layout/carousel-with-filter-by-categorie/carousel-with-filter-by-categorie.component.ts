@@ -1,32 +1,31 @@
-import {Component, ElementRef, OnInit, Renderer2} from '@angular/core';
-import {Router} from "@angular/router";
+import { Component, ElementRef, Inject, PLATFORM_ID, Renderer2 } from '@angular/core';
+import { Router } from "@angular/router";
+import { BaseCarouselComponent } from '../../shared/components/base-carousel.component';
 
 @Component({
   selector: 'app-carousel-with-filter-by-categorie',
   templateUrl: './carousel-with-filter-by-categorie.component.html',
-  styleUrl: './carousel-with-filter-by-categorie.component.css'
+  styleUrls: ['./carousel-with-filter-by-categorie.component.css']
 })
-export class CarouselWithFilterByCategorieComponent implements OnInit{
+export class CarouselWithFilterByCategorieComponent extends BaseCarouselComponent {
 
-  constructor(private renderer: Renderer2, private el: ElementRef,private router:Router) {}
-
-  ngOnInit() {
-    this.initSlider();
-    // Ajoutez les écouteurs d'événements ici si nécessaire
+  constructor(
+    protected override renderer: Renderer2,
+    protected override el: ElementRef,
+    @Inject(PLATFORM_ID) protected override platformId: Object,
+    private router: Router
+  ) {
+    super(renderer, el, platformId);
   }
 
-  initSlider() {
-    const imageList = this.el.nativeElement.querySelector(".slider-wrapper .image-list");
-    const slideButtons = this.el.nativeElement.querySelectorAll(".slider-wrapper .slide-button");
-    const sliderScrollbar = this.el.nativeElement.querySelector(".container .slider-scrollbar");
-    const scrollbarThumb = sliderScrollbar.querySelector(".scrollbar-thumb");
-    const maxScrollLeft = imageList.scrollWidth - imageList.clientWidth;
+  protected override initializeCarousel(): void {
+    const imageList = this.safeQuerySelector(".slider-wrapper .image-list");
+    const slideButtons = this.safeQuerySelectorAll(".slider-wrapper .slide-button");
+    const sliderScrollbar = this.safeQuerySelector(".container .slider-scrollbar");
 
-    // Gestion des événements et manipulation du DOM ici
-    // Assurez-vous d'utiliser this.renderer pour manipuler le DOM au lieu de document
+    if (!imageList || !slideButtons || !sliderScrollbar) return;
 
-    // Gestion du clic sur le bouton de défilement
-    slideButtons.forEach((button: HTMLElement) =>{
+    slideButtons.forEach((button: HTMLElement) => {
       this.renderer.listen(button, 'click', () => {
         const direction = button.id === "prev-slide" ? -1 : 1;
         const scrollAmount = imageList.clientWidth * direction;
@@ -34,15 +33,12 @@ export class CarouselWithFilterByCategorieComponent implements OnInit{
       });
     });
 
-    // Gestion du redimensionnement de la fenêtre
     this.renderer.listen(window, 'resize', () => {
-      // Réinitialise le slider en cas de redimensionnement
-      this.initSlider();
+      this.initializeCarousel();
     });
   }
 
   RedirectToFacture() {
     this.router.navigateByUrl("/reservationInformation");
   }
-
 }

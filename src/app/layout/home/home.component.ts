@@ -79,8 +79,6 @@ export class HomeComponent implements OnInit,AfterViewInit{
       next:data=>{
         this.dataApartement=data
         this.dataApartement2=data
-        console.log("dataApartement")
-        console.log(this.dataApartement)
       },
       error:err => {
         console.log("verfie getAll Apparetement")
@@ -94,7 +92,7 @@ export class HomeComponent implements OnInit,AfterViewInit{
         this.dataApartement2=data;
       },
       error:err=>{
-        console.log("verifie getByCategorieAppartement");
+        console.log(err);
       }
     })
   }
@@ -105,7 +103,6 @@ export class HomeComponent implements OnInit,AfterViewInit{
       this.getAllByCategorierAPT(this.selecCategorieApt)
     }
 
-    console.log("dataselectcate====>"+this.selecCategorieApt)
   }
   public apparetementByMontant(){
     if(this.villSelected == ''){

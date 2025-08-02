@@ -48,8 +48,6 @@ public ListeColum = [
 
   ngOnInit(): void {
     this.getAll();
-
-  console.log(this.dataSource)
 }
 
 
@@ -67,10 +65,9 @@ public ListeColum = [
         this.items=data;
         this.dataSource = new MatTableDataSource<any>(this.items);
 
-        if(data.length!=0){console.log(data); console.log(this.items)}
       },
       error:(err)=>{
-        console.log('verifier getAll categorie Voiture');
+        console.log('verifier getAll categorie Voiture'+err);
       }
     })
   }
@@ -88,7 +85,6 @@ public ListeColum = [
   }
 
   saveObject() {
-    console.log(this.item)
     const fomData=this.prepareFormData(this.item);
     this.service.save(fomData).subscribe({
       next:(data)=>{
@@ -96,9 +92,6 @@ public ListeColum = [
           this.submitted = true;
           this.display=false;
          this.getAll();
-        }
-        else {
-          console.log(data)
         }
       }
     })
@@ -174,8 +167,6 @@ public ListeColum = [
   selectedCategorieItem: CategorieVoiture =new CategorieVoiture();
 
   editCategorie(element:CategorieVoiture) {
-    console.log(element)
-    console.log(this.selectedCategorieItem)
     this.isCreat=false;
     this.isEdit=true
     this.selectedCategorieItem = Object.assign({}, element);
@@ -206,10 +197,8 @@ public ListeColum = [
       "libelle": this.selectedCategorieItem.libelle,
       "libelleNew": this.item.libelle
     }
-    console.log(data);
     this.service.update(data).subscribe({
       next:data=>{
-        console.log(data)
         this.display=false;
         this.getAll();
       },
@@ -220,7 +209,6 @@ public ListeColum = [
   }
 
   photoByCode(element:any) {
-    console.log(element)
     this.image=element.imagePaths;
     this.isAffaiche=true
   }
@@ -247,9 +235,6 @@ public ListeColum = [
         )
       }
       this.item.images=fileHandle
-      console.log("3ela lahhh::::")
-      console.log("image categorires");
-      console.log(this.item.images)
       this.isKayna=true
     }
   }

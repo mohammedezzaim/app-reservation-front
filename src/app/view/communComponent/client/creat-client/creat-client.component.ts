@@ -35,8 +35,6 @@ export class CreatClientComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.getAll();
-
-    console.log(this.dataSource)
   }
 
 
@@ -54,10 +52,9 @@ export class CreatClientComponent implements OnInit, AfterViewInit {
         this.items=data;
         this.dataSource = new MatTableDataSource<any>(this.items);
 
-        if(data.length!=0){console.log(data); console.log(this.items)}
       },
       error:(err)=>{
-        console.log('verifier getAll  Client');
+        console.log('verifier getAll  Client'+err);
       }
     })
   }
@@ -75,9 +72,7 @@ export class CreatClientComponent implements OnInit, AfterViewInit {
           this.display=false;
           alert('ok')
         }
-        else {
-          console.log(data)
-        }
+
       }
     })
 

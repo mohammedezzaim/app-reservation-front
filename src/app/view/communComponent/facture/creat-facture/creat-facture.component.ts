@@ -6,6 +6,7 @@ import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import {FactureService} from "../../../../sahred/service/communService/facture.service";
 import {Facture} from "../../../../sahred/model/communModel/facture.model";
+import e from 'express';
 
 @Component({
   selector: 'app-creat-facture',
@@ -39,8 +40,6 @@ export class CreatFactureComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.getAll();
-
-    console.log(this.dataSource)
   }
 
 
@@ -58,13 +57,10 @@ export class CreatFactureComponent implements OnInit, AfterViewInit {
         this.items=data;
         this.dataSource = new MatTableDataSource<any>(this.items);
 
-        if(data.length!=0){
-          console.log("DATA"+data);
-          console.log("this.items"+this.items);
-        }
+
       },
       error:(err)=>{
-        console.log('verifier getAll contrat');
+        console.log('verifier getAll contrat'+err);
       }
     })
   }
@@ -74,12 +70,9 @@ export class CreatFactureComponent implements OnInit, AfterViewInit {
         if(data==1){
           this.submitted = true;
           this.display=false;
-          console.log(data)
           this.getAll()
         }
-        else {
-          console.log(data)
-        }
+
       },
       error:(err)=>{
         console.log(err)
@@ -164,12 +157,10 @@ export class CreatFactureComponent implements OnInit, AfterViewInit {
 
     this.service.get(ref).subscribe({
       next:(data)=>{
-        console.log("data"+data.dateFacture +data.ref + data.paiementDto+data.montantTotal+data.location.ref)
         this.contrat=data;
-        console.log("this.contrat"+this.contrat.dateFacture +this.contrat.ref + this.contrat.paiementDto+this.contrat.montantTotal+this.contrat.location.ref)
       },
       error:(err)=>{
-        console.log('verifier getByRef contrat');
+        console.log('verifier getByRef contrat'+err);
       }
     })
   }
