@@ -1,0 +1,86 @@
+
+<div class="container">
+  <div class="slider-wrapper">
+    <h1 class="mx-4" style="
+    padding-left: 4rem;
+    font-family: none;
+    font-size: 27px;
+    position: absolute;
+    top: -4rem;
+    left: 2rem;" >{{ 'Discover our cars categories'|translate}}</h1>
+
+    <ul class="image-list"  style="    width: 110rem;
+    margin-left: 1rem;">
+      <div class="card" style="width: 18rem;" *ngFor="let item of categories">
+        <img [src]="item.imagePaths" class="card-img-top" alt="..." (click)="RedirectToFacture()">
+        <div class="info" (click)="RedirectToFacture()" #infoDiv (click)="getH1Content(item.libelle)">
+          <h1 classe=tit style="color:white" >{{item.libelle}}</h1>
+        </div>
+      </div>
+    </ul>
+  </div>
+</div>
+
+<p-dialog  [maximizable]="true"  [(visible)]="display" [style]="{width: '90%',height:'90%px'}" header="" [modal]="true" styleClass="p-fluid">
+  <div  class="btn_format">
+    <a class="btn btn-outline-primary rounded-0" [class.active]="formatcard" (click)="handelHorizental()" > <i class="bi bi-list"></i> </a>
+    <a class="btn btn-outline-primary rounded-0"[class.active]="!formatcard" (click)="handelVertical()"> <i class="bi bi-columns-gap"></i> </a>
+  </div>
+
+
+
+
+
+  <div *ngIf="formatcard" class="container my-4" style=" margin-top: 50px;">
+    <div *ngFor="let item of dataVoiture" class="card-horizontal my-3">
+      <div class="card-image">
+        <img  [src]="returnUrl(item)" class="img_horizental"/>
+      </div>
+      <div class="card-details">
+        <a class="card-action" href="#"><i class="fa fa-heart"></i></a>
+        <div class="card-heading">
+          {{item.nomModele}}
+        </div>
+        <div class="card-text">
+          {{ item.nomModele }} is a {{item.categorie.libelle}} with Color {{item.couleur}} & Puissance of {{item.puissance}} Hourses.
+        </div>
+        <div class="card-text">
+          {{item.prix}}
+        </div>
+        <a href="#" class="card-button" routerLink="/reservationInformation/{{item.matricule}}">Reserver</a>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!formatcard" class="container my-5" style="margin-top:50px;">
+    <div class="row">
+      <div *ngFor="let item of dataVoiture" class="col-lg-4 col-md-6 col-sm-12" style="margin-top: 15px;">
+        <div class="card-sl my-3">
+          <div class="card-image" style="height: 220px;">
+            <img class="iii" style="height: 100%; width: 100%;" [src]="returnUrl(item)" />
+
+          </div>
+          <a class="card-action" href="#"><i class="fa fa-heart"></i></a>
+          <div class="card-heading">
+            {{item.nomModele}}
+          </div>
+          <div class="card-text">
+            {{ item.nomModele }} is a {{item.categorie.libelle}} with Color {{item.couleur}} & Puissance of {{item.puissance}} Hourses.
+          </div>
+          <div class="card-text">
+            {{item.prix}}
+          </div>
+
+          <!--              <button class="btn btn-outline-primary" (click)="returnUrl(apparetement)">getImage</button>-->
+
+          <button href="#" class="card-button" routerLink="/reservationInformation/{{item.matricule}}"> {{ 'Réserver'|translate }} </button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+</p-dialog>
