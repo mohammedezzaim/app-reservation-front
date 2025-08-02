@@ -13,19 +13,19 @@ export class FactureService {
 
   constructor(private http: HttpClient) {}
   public save(): Observable<any> {
-    return this.http.post<number>("http://localhost:8085/api/facture/", this.item);
+    return this.http.post<number>("https://safarent-backend.up.railway.app/api/facture/", this.item);
   }
 
   public getAll():Observable<Array<Facture>>{
-    return this.http.get<Array<Facture>>("http://localhost:8085/api/facture/");
+    return this.http.get<Array<Facture>>("https://safarent-backend.up.railway.app/api/facture/");
   }
 
   public delete(ref:String):Observable<any>{
-    return this.http.delete<number>(`http://localhost:8085/api/facture/ref/${ref}`);
+    return this.http.delete<number>(`https://safarent-backend.up.railway.app/api/facture/ref/${ref}`);
   }
 
   public  update(propritaire:Facture):Observable<any>{
-    return this.http.put("http://localhost:8085/api/facture/",propritaire)
+    return this.http.put("https://safarent-backend.up.railway.app/api/facture/",propritaire)
 
   }
 
@@ -48,7 +48,7 @@ export class FactureService {
 
 
   get(ref: string):Observable<Facture> {
-    return this.http.get<Facture>(`http://localhost:8085/api/facture/ref/${ref}`);
+    return this.http.get<Facture>(`https://safarent-backend.up.railway.app/api/facture/ref/${ref}`);
 
   }
 }

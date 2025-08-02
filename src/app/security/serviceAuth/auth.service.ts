@@ -51,7 +51,9 @@ export class AuthService {
       .set('username', username)
       .set('password', password);
 
-    return this.http.post('http://localhost:8085/login', params, options)
+
+
+    return this.http.post('https://safarent-backend.up.railway.app/login', params, options)
   }
 
   loadProfile(data: any) {
@@ -143,27 +145,27 @@ export class AuthService {
   // }
 
   creeCompte1(client:Client){
-    return  this.http.post<number>("http://localhost:8085/api/client/",client)
+    return  this.http.post<number>("https://safarent-backend.up.railway.app/api/client/",client)
   }
 
   creeCompte2(propAppartement:AgenceAppartement){
-    return  this.http.post<number>("http://localhost:8085/api/agenceAppartement/",propAppartement)
+    return  this.http.post<number>("https://safarent-backend.up.railway.app/api/agenceAppartement/",propAppartement)
   }
 
   creeCompte3(agenceLocation:AgenceLocation){
-    return  this.http.post<number>("http://localhost:8085/api/agenceLocation/",agenceLocation)
+    return  this.http.post<number>("https://safarent-backend.up.railway.app/api/agenceLocation/",agenceLocation)
   }
 
   public getByUsername(username:string):Observable<any> | null{
     if(this.isUser){
-      return this.http.get<any>(`http://localhost:8085/api/client/username/${username}`);
+      return this.http.get<any>(`https://safarent-backend.up.railway.app/api/client/username/${username}`);
     }
     else if(this.isPropraitaire){
-      return this.http.get<any>(`http://localhost:8085/api/agenceAppartement/username/${username}`);
+      return this.http.get<any>(`https://safarent-backend.up.railway.app/api/agenceAppartement/username/${username}`);
     }
     else if(this.isAgenceLocation){
       console.log("hello word")
-      return this.http.get<any>(`http://localhost:8085/api/agenceLocation/username/${username}`);
+      return this.http.get<any>(`https://safarent-backend.up.railway.app/api/agenceLocation/username/${username}`);
     }
     else {
       return null;
@@ -210,6 +212,6 @@ export class AuthService {
 
 
   getNotification(iceAgApp:number):Observable<any>{
-    return  this.http.get( `http://localhost:8085/api/notification/proprAppartement/${iceAgApp}`)
+    return  this.http.get( `https://safarent-backend.up.railway.app/api/notification/proprAppartement/${iceAgApp}`)
   }
 }

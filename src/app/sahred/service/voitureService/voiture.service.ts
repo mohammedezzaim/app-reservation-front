@@ -11,7 +11,7 @@ import {Appartement} from "../../model/appartemetModel/appartement.model";
 export class VoitureService {
   private _item:Voiture=new Voiture();
   private _items:Array<Voiture>=new Array<Voiture>();
-  private url="http://localhost:8085/api/safarent/manager/voiture/";
+  private url="https://safarent-backend.up.railway.app/api/safarent/manager/voiture/";
   constructor(private http:HttpClient) { }
 
   public save(voitureFormData: FormData): Observable<number> {
@@ -19,19 +19,19 @@ export class VoitureService {
   }
 
   public getAll():Observable<Array<Voiture>>{
-    return this.http.get<Array<Voiture>>("http://localhost:8085/api/safarent/manager/voiture/public");
+    return this.http.get<Array<Voiture>>("https://safarent-backend.up.railway.app/api/safarent/manager/voiture/public");
   }
 
   public delete(matricule:String):Observable<any>{
     return this.http.delete<number>(`${this.url}matricule/${matricule}`);
   }
   get(matricul: string):Observable<Voiture> {
-    return this.http.get<Voiture>(`http://localhost:8085/api/safarent/manager/voiture/public/matricule/${matricul}`);
+    return this.http.get<Voiture>(`https://safarent-backend.up.railway.app/api/safarent/manager/voiture/public/matricule/${matricul}`);
   }
 
 
   public  deleteImageCloudinary(url:string){
-    this.http.delete(`http://localhost:8085/api/safarent/manager/voiture/images/cloudinary/${url}`)
+    this.http.delete(`https://safarent-backend.up.railway.app/api/safarent/manager/voiture/images/cloudinary/${url}`)
   }
 
 

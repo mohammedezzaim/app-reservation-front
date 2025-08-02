@@ -11,7 +11,7 @@ export class NotifiactionService {
 
   private _item:Notifiaction=new Notifiaction();
   private _items:Array<Notifiaction>=new Array<Notifiaction>();
-  private url="http://localhost:8085/api/notification/";
+  private url="https://safarent-backend.up.railway.app/api/notification/";
   private _isAffaiche: boolean=false;
   constructor(private http:HttpClient) { }
 

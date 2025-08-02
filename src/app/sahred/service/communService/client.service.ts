@@ -10,7 +10,7 @@ export class ClientService {
 
   private _item: Client = new Client();
   private _items: Array<Client> = new Array<Client>()
-  private url = "http://localhost:8085/api/client/"
+  private url = "https://safarent-backend.up.railway.app/api/client/"
 
   constructor(private http: HttpClient) {
   }
@@ -35,7 +35,7 @@ export class ClientService {
     return this.http.get<Client>(`${this.url}username/${username}`);
   }
 public getByCin(cin: String): Observable<Client> {
-    return this.http.get<Client>(`http://localhost:8085/api/client/cin/${cin}`);
+    return this.http.get<Client>(`https://safarent-backend.up.railway.app/api/client/cin/${cin}`);
   }
 
 

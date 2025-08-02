@@ -11,7 +11,7 @@ export class CategorieVoitureService {
 
   private _item:CategorieVoiture=new CategorieVoiture();
   private _items:Array<CategorieVoiture>=new Array<CategorieVoiture>()
-  private url="http://localhost:8085/api/safarent/manager/categorieVoiture/"
+  private url="https://safarent-backend.up.railway.app/api/safarent/manager/categorieVoiture/"
   constructor(private http:HttpClient) { }
 
   public save(formData:FormData): Observable<number> {
@@ -19,7 +19,7 @@ export class CategorieVoitureService {
   }
 
   public getAll():Observable<Array<CategorieVoiture>>{
-    return this.http.get<Array<CategorieVoiture>>("http://localhost:8085/api/safarent/manager/categorieVoiture/public");
+    return this.http.get<Array<CategorieVoiture>>("https://safarent-backend.up.railway.app/api/safarent/manager/categorieVoiture/public");
   }
 
   public delete(libelle:String):Observable<any>{

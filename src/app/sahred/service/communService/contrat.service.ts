@@ -14,19 +14,19 @@ export class ContratService {
 
   constructor(private http: HttpClient) {}
   public save(): Observable<any> {
-    return this.http.post<number>("http://localhost:8085/api/contrat/", this.item);
+    return this.http.post<number>("https://safarent-backend.up.railway.app/api/contrat/", this.item);
   }
 
   public getAll():Observable<Array<Contrat>>{
-    return this.http.get<Array<Contrat>>("http://localhost:8085/api/contrat/");
+    return this.http.get<Array<Contrat>>("https://safarent-backend.up.railway.app/api/contrat/");
   }
 
   public delete(numContrat:number):Observable<any>{
-    return this.http.delete<number>(`http://localhost:8085/api/contrat/numContrat/${numContrat}`);
+    return this.http.delete<number>(`https://safarent-backend.up.railway.app/api/contrat/numContrat/${numContrat}`);
   }
 
   public  update(propritaire:Contrat):Observable<any>{
-    return this.http.put("http://localhost:8085/api/contrat/",propritaire)
+    return this.http.put("https://safarent-backend.up.railway.app/api/contrat/",propritaire)
 
   }
 
@@ -49,7 +49,7 @@ export class ContratService {
 
 
   get(numContrat: number):Observable<Contrat> {
-    return this.http.get<Contrat>(`http://localhost:8085/api/contrat/numContrat/${numContrat}`);
+    return this.http.get<Contrat>(`https://safarent-backend.up.railway.app/api/contrat/numContrat/${numContrat}`);
 
   }
 }

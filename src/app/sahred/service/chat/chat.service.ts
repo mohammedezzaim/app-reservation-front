@@ -11,7 +11,7 @@ export class ChatService {
 
   private _item:Chat=new Chat();
   private _items:Array<Chat>=new Array<Chat>();
-  private url="http://localhost:8085/api/chat/";
+  private url="https://safarent-backend.up.railway.app/api/chat/";
   constructor(private http:HttpClient) { }
 
   public save(): Observable<number> {

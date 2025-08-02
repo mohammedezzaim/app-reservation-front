@@ -11,7 +11,7 @@ export class ReservationService {
 
   private _item: Reservation = new Reservation();
   private _items: Array<Reservation> = new Array<Reservation>()
-  private url = "http://localhost:8085/api/safarent/manager/reservation/"
+  private url = "https://safarent-backend.up.railway.app/api/safarent/manager/reservation/"
 
   constructor(private http: HttpClient) {
   }

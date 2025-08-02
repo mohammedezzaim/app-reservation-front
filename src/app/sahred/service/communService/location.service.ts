@@ -15,24 +15,24 @@ export class LocationService {
 
   constructor(private http: HttpClient) {}
   public save(): Observable<any> {
-    return this.http.post<number>("http://localhost:8085/api/location/", this.item);
+    return this.http.post<number>("https://safarent-backend.up.railway.app/api/location/", this.item);
   }
 
   public getAll():Observable<Array<Location>>{
-    return this.http.get<Array<Location>>("http://localhost:8085/api/location/");
+    return this.http.get<Array<Location>>("https://safarent-backend.up.railway.app/api/location/");
   }
 
   public delete(ref:String):Observable<any>{
-    return this.http.delete<number>(`http://localhost:8085/api/location/ref/${ref}`);
+    return this.http.delete<number>(`https://safarent-backend.up.railway.app/api/location/ref/${ref}`);
   }
   getLocationsByMonth(): Observable<any> {
-    return this.http.get<any>("http://localhost:8085/api/location/count-by-month");
+    return this.http.get<any>("https://safarent-backend.up.railway.app/api/location/count-by-month");
   }
   public findLocationByReservationRef(ref:string):Observable<any>{
-    return this.http.get(`http://localhost:8085/api/location/reservationRef/${ref}`)
+    return this.http.get(`https://safarent-backend.up.railway.app/api/location/reservationRef/${ref}`)
   }
   public  update(propritaire:Location):Observable<any>{
-    return this.http.put("http://localhost:8085/api/location/",propritaire)
+    return this.http.put("https://safarent-backend.up.railway.app/api/location/",propritaire)
 
   }
 
@@ -55,7 +55,7 @@ export class LocationService {
 
 
   get(ref: string):Observable<Location> {
-    return this.http.get<Location>(`http://localhost:8085/api/location/ref/${ref}`);
+    return this.http.get<Location>(`https://safarent-backend.up.railway.app/api/location/ref/${ref}`);
 
   }
 }

@@ -21,22 +21,22 @@ export class CategoriesAppartementService {
   constructor(private http: HttpClient) { }
 
   public save(fomrData:FormData): Observable<number> {
-    return this.http.post<number>("http://localhost:8085/api/categoriesAppartemen/",fomrData);
+    return this.http.post<number>("https://safarent-backend.up.railway.app/api/categoriesAppartemen/",fomrData);
   }
 
   public getAll():Observable<Array<CategoriesAppartement>>{
-    return this.http.get<Array<CategoriesAppartement>>("http://localhost:8085/api/categoriesAppartemen/public");
+    return this.http.get<Array<CategoriesAppartement>>("https://safarent-backend.up.railway.app/api/categoriesAppartemen/public");
   }
 
   public get(libelle:String):Observable<CategoriesAppartement>{
-    return this.http.get<CategoriesAppartement>(`http://localhost:8085/api/categoriesAppartemen/libelle/${libelle}`);
+    return this.http.get<CategoriesAppartement>(`https://safarent-backend.up.railway.app/api/categoriesAppartemen/libelle/${libelle}`);
   }
   public delete(libelle:String):Observable<any>{
-    return this.http.delete<number>(`http://localhost:8085/api/categoriesAppartemen/libelle/${libelle}`);
+    return this.http.delete<number>(`https://safarent-backend.up.railway.app/api/categoriesAppartemen/libelle/${libelle}`);
   }
 
   public  update(data:any):Observable<any>{
-    return this.http.put("http://localhost:8085/api/categoriesAppartemen/",data)
+    return this.http.put("https://safarent-backend.up.railway.app/api/categoriesAppartemen/",data)
 
   }
 

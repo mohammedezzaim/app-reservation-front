@@ -25,39 +25,39 @@ export class AppartemetService {
   }
 
   public save(appadtemetFormData: FormData): Observable<any> {
-    return this.http.post<number>("http://localhost:8085/api/appartement/", appadtemetFormData);
+    return this.http.post<number>("https://safarent-backend.up.railway.app/api/appartement/", appadtemetFormData);
   }
 
   public getAll():Observable<Array<Appartement>>{
-    return this.http.get<Array<Appartement>>("http://localhost:8085/api/appartement/public");
+    return this.http.get<Array<Appartement>>("https://safarent-backend.up.railway.app/api/appartement/public");
   }
   public  getByCategoriesAppartementLibelleAndPropAppartementUsername(libelle:String,username:String):Observable<Array<Appartement>>{
-    return this.http.get<Array<Appartement>>(`http://localhost:8085/api/appartement/CategorieAppartementLibelle/${libelle}/PropAppartementUsername/${username}`);
+    return this.http.get<Array<Appartement>>(`https://safarent-backend.up.railway.app/api/appartement/CategorieAppartementLibelle/${libelle}/PropAppartementUsername/${username}`);
   }
 
   public delete(code:String):Observable<any>{
-    return this.http.delete<number>(`http://localhost:8085/api/appartement/code/${code}`);
+    return this.http.delete<number>(`https://safarent-backend.up.railway.app/api/appartement/code/${code}`);
   }
 
 
   public  getAppartemetsbyLibelle(libelle:String):Observable<any>{
-    return this.http.get(`http://localhost:8085/api/appartement/listAppartementCategories/${libelle}`);
+    return this.http.get(`https://safarent-backend.up.railway.app/api/appartement/listAppartementCategories/${libelle}`);
   }
 
 
   public  getAppartemetsCin(cin:number):Observable<any>{
-    return this.http.get(`http://localhost:8085/api/appartement/listAppartementCin/${cin}`);
+    return this.http.get(`https://safarent-backend.up.railway.app/api/appartement/listAppartementCin/${cin}`);
   }
 
 
   public  update(propritaire:Appartement):Observable<any>{
-    return this.http.put("http://localhost:8085/api/appartement/",propritaire)
+    return this.http.put("https://safarent-backend.up.railway.app/api/appartement/",propritaire)
 
   }
 
   // public getImagesByProduitRef(code:string):any{
   //
-  //   this.http.get(`http://localhost:8085/api/appartement/images/${code}`).subscribe(
+  //   this.http.get(`https://safarent-backend.up.railway.app/api/appartement/images/${code}`).subscribe(
   //     {
   //       next:data=>{
   //         this.imagesUtilisateur=data
@@ -73,13 +73,13 @@ export class AppartemetService {
 
 
   public getImagesByProduitRef(code:string):Observable<any>{
-    return  this.http.get<any>(`http://localhost:8085/api/appartement/images/${code}`);
+    return  this.http.get<any>(`https://safarent-backend.up.railway.app/api/appartement/images/${code}`);
 
   }
 
 
   public  deleteImageCloudinary(url:string){
-    this.http.delete(`http://localhost:8085/api/appartement/images/cloudinary/${url}`)
+    this.http.delete(`https://safarent-backend.up.railway.app/api/appartement/images/cloudinary/${url}`)
   }
 
 
@@ -101,11 +101,11 @@ export class AppartemetService {
 
 
   get(code: string):Observable<Appartement> {
-    return this.http.get<Appartement>(`http://localhost:8085/api/appartement/public/code/${code}`);
+    return this.http.get<Appartement>(`https://safarent-backend.up.railway.app/api/appartement/public/code/${code}`);
   }
 
 
   getImages(code: string):Observable<any> {
-    return this.http.get<any>(`http://localhost:8085/api/appartement/code/${code}`);
+    return this.http.get<any>(`https://safarent-backend.up.railway.app/api/appartement/code/${code}`);
   }
 }

@@ -29,33 +29,33 @@ export class AgenceAppartementService {
   constructor(private http: HttpClient) { }
 
   public save(): Observable<any> {
-    return this.http.post<number>("http://localhost:8085/api/agenceAppartement/", this.item);
+    return this.http.post<number>("https://safarent-backend.up.railway.app/api/agenceAppartement/", this.item);
   }
 
   public getAll():Observable<Array<AgenceAppartement>>{
-    return this.http.get<Array<AgenceAppartement>>("http://localhost:8085/api/agenceAppartement/");
+    return this.http.get<Array<AgenceAppartement>>("https://safarent-backend.up.railway.app/api/agenceAppartement/");
   }
 
   public get(cin:string):Observable<AgenceAppartement>{
-    return this.http.get<AgenceAppartement>(`http://localhost:8085/api/agenceAppartement/cin/${cin}`);
+    return this.http.get<AgenceAppartement>(`https://safarent-backend.up.railway.app/api/agenceAppartement/cin/${cin}`);
   }
 
   public delete(cin:number):Observable<any>{
-    return this.http.delete<number>(`http://localhost:8085/api/agenceAppartement/cin/${cin}`);
+    return this.http.delete<number>(`https://safarent-backend.up.railway.app/api/agenceAppartement/cin/${cin}`);
   }
 
   public  update(agenceAppartementFormData:FormData):Observable<any>{
     console.log(agenceAppartementFormData)
-    return this.http.put("http://localhost:8085/api/agenceAppartement/",agenceAppartementFormData)
+    return this.http.put("https://safarent-backend.up.railway.app/api/agenceAppartement/",agenceAppartementFormData)
   }
 
   public getByusername(username: String): Observable<AgenceAppartement> {
-    return this.http.get<AgenceAppartement>(`http://localhost:8085/api/agenceAppartement/username/${username}`);
+    return this.http.get<AgenceAppartement>(`https://safarent-backend.up.railway.app/api/agenceAppartement/username/${username}`);
   }
 
 
   public getImagesByIceAgApp(username:string):Observable<any>{
-    return  this.http.get<any>(`http://localhost:8085/api/agenceAppartement/images/${username}`);
+    return  this.http.get<any>(`https://safarent-backend.up.railway.app/api/agenceAppartement/images/${username}`);
   }
 
 
@@ -64,7 +64,7 @@ export class AgenceAppartementService {
     this.item.username=username;
     this.item.password=password;
     console.log(this.item)
-    return  this.http.post<any>("http://localhost:8085/api/agenceAppartement/", this.item)
+    return  this.http.post<any>("https://safarent-backend.up.railway.app/api/agenceAppartement/", this.item)
   }
 
   get item(): AgenceAppartement {

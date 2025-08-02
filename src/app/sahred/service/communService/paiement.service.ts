@@ -10,7 +10,7 @@ export class PaiementService {
 
   private _item:Paiement =new Paiement();
   private _items:Array<Paiement>=new Array<Paiement>()
-  private url='http://localhost:8085/api/paiement/'
+  private url='https://safarent-backend.up.railway.app/api/paiement/'
   constructor(private http:HttpClient) { }
 
   public save(): Observable<number> {

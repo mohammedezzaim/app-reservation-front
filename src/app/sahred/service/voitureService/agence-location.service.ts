@@ -14,7 +14,7 @@ export class AgenceLocationService {
 
   public _item: AgenceLocation = new AgenceLocation();
   public _items:Array<AgenceLocation>=new Array<AgenceLocation>();
-  public url="http://localhost:8085/api/agenceLocation/";
+  public url="https://safarent-backend.up.railway.app/api/agenceLocation/";
   constructor(private http: HttpClient) { }
   public save(): Observable<number> {
     return this.http.post<number>(this.url, this.item);
@@ -66,6 +66,6 @@ export class AgenceLocationService {
     this.item.usernameAgenceLoc=username;
     this.item.password=password;
     console.log(this.item)
-    return  this.http.post<any>("http://localhost:8085/api/agenceLocation/", this.item)
+    return  this.http.post<any>("https://safarent-backend.up.railway.app/api/agenceLocation/", this.item)
   }
 }
