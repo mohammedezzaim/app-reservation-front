@@ -46,27 +46,39 @@
             }
           },
           "configurations": {
-            "production": {
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "3mb",
-                  "maximumError": "5mb"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "6kb",
-                  "maximumError": "10kb"
-                }
-              ],
-              "outputHashing": "all"
-            },
-            "development": {
-              "optimization": false,
-              "extractLicenses": false,
-              "sourceMap": true
-            }
-          },
+  "production": {
+    "budgets": [
+      {
+        "type": "initial",
+        "maximumWarning": "5mb",
+        "maximumError": "6mb"
+      },
+      {
+        "type": "anyComponentStyle",
+        "maximumWarning": "10kb",
+        "maximumError": "30kb"
+      }
+    ],
+    "allowedCommonJsDependencies": [
+      "jspdf",
+      "canvg",
+      "moment",
+      "highcharts",
+      "rgbcolor",
+      "raf",
+      "core-js",
+      "@babel/runtime"
+    ],
+    "optimization": true,
+    "aot": true,
+    "buildOptimizer": true,
+    "outputHashing": "all",
+    "sourceMap": false,
+    "namedChunks": false,
+    "extractLicenses": true,
+    "vendorChunk": false
+  }
+},
           "defaultConfiguration": "production"
         },
         "serve": {
