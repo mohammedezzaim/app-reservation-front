@@ -71,12 +71,10 @@
     ],
     "optimization": true,
     "aot": true,
-    "buildOptimizer": true,
     "outputHashing": "all",
     "sourceMap": false,
     "namedChunks": false,
     "extractLicenses": true,
-    "vendorChunk": false
   }
 },
           "defaultConfiguration": "production"
